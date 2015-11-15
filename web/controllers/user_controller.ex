@@ -1,6 +1,7 @@
 defmodule Rumbl.UserController do
-  use plug :authenticate when action in [:index, :show], Rumbl.Web, :controller
-
+  use Rumbl.Web, :controller
+  plug :authenticate when action in [:index, :show]
+  
   defp authenticate(conn, _) do
     if conn.assigns.current_user do
       conn
@@ -28,12 +29,14 @@ defmodule Rumbl.UserController do
     render conn, "new.html", changeset: changeset
   end
 
+  alias Rumbl.Auth
   def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+    changeset = User.registration_changeset(%User{}, user_params)
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "#{user.name} created!")
+        |> Auth.login(user)
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

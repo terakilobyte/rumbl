@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Rumbl.io</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-  </head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-  <body>
-    <div class="container" role="main">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-        </ul>
-        <span class="logo"></span>
-      </div>
+        <title>Rumbl.io</title>
+        <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css ") %>">
+    </head>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <body>
+        <div class="container" role="main">
+            <div class="header">
+                <ol class="breadcrumb text-right">
+                    <%= if @current_user do %>
+                        <li><%= @current_user.username  %></li>
+                        <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+                    <% else %>
+                        <li><%= link "Register", to: user_path(@conn, :new) %></li>
+                        <li><%= link "Login", to: session_path(@conn, :new) %></li>
+                    <% end %>
+                </ol>
+            </div>
 
-      <%= @inner %>
+            <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+            <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </body>
+            <%= @inner %>
+
+        </div>
+        <!-- /container -->
+        <script src="<%= static_path(@conn, "/js/app.js ") %>"></script>
+    </body>
+
 </html>
