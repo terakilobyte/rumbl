@@ -18,6 +18,7 @@
                 <ol class="breadcrumb text-right">
                     <%= if @current_user do %>
                         <li><%= @current_user.username  %></li>
+                        <li><%= link "My Videos", to: video_path(@conn, :index) %></li>
                         <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
                     <% else %>
                         <li><%= link "Register", to: user_path(@conn, :new) %></li>

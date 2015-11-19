@@ -9,7 +9,7 @@
 
   <li>
     <strong> url:</strong>
-    <%= @video. url %>
+    <%= @video.url %>
   </li>
 
   <li>
