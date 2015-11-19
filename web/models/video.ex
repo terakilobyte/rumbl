@@ -1,9 +1,11 @@
 defmodule Rumbl.Video do
   use Rumbl.Web, :model
 
+  @primary_key {:id, Rumbl.Permalink, autogenerate: true}
+
   defimpl Phoenix.Param, for: Rumbl.Video do
     def to_param(%{slug: slug, id: id}) do
-      "{id}-#{slug}"
+      "#{id}-#{slug}"
     end
   end
 
