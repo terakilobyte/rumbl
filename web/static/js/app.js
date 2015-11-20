@@ -14,11 +14,11 @@
 import 'deps/phoenix_html/web/static/js/phoenix_html';
 
 // Import local files
-import Player from './player';
-const video = document.getElementById('video');
-if (video) {
-  Player.init(video.id, video.getAttribute('data-player-id'));
-}
+import socket from './socket';
+import Video from './video';
+
+Video.init(socket, document.getElementById('video'));
+
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
