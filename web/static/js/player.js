@@ -5,19 +5,19 @@ let Player = {
       return this.onIframeReady(domId, playerId);
     };
 
-    const youtubeScriptTag = document.createElement('script');
-    youtubeScriptTag.src = '//www.youtube.com/iframe_api';
+    const youtubeScriptTag = document.createElement("script");
+    youtubeScriptTag.src = "//www.youtube.com/iframe_api";
     document.head.appendChild(youtubeScriptTag);
   },
 
   onIframeReady(domId, playerId) {
     this.player = new YT.Player(domId, {
-      height: '360',
-      width: '420',
+      height: "360",
+      width: "420",
       videoId: playerId,
       events: {
-        'onReady': event => this.onPlayerReady(event),
-        'onStateChange': event => this.onPlayerStateChange(event)
+        "onReady": event => this.onPlayerReady(event),
+        "onStateChange": event => this.onPlayerStateChange(event)
       }
     });
   },
