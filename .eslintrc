@@ -16,7 +16,7 @@
     "key-spacing"  : 0,
     "no-else-return"   : 0,
     "no-multi-spaces"  : 0,
-    "quotes"           : [2, "single"],
+    "quotes"           : [2, "double"],
     "jsx-quotes"       : [2, "prefer-single"],
     "one-var"          : 0
   }
