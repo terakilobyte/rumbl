@@ -16,6 +16,7 @@ defmodule Rumbl.Video do
     belongs_to :user, Rumbl.User
     belongs_to :category, Rumbl.Category
     field :slug, :string
+    has_many :annotations, Rumbl.Annotation
 
     timestamps
   end

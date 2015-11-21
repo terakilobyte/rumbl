@@ -23,8 +23,6 @@ defmodule Rumbl.Auth do
     repo = Keyword.fetch!(opts, :repo)
     user = repo.get_by(Rumbl.User, username: username)
 
-    IO.puts("lolol")
-
     cond do
       user && checkpw(given_pass, IO.inspect(user.password_hash)) ->
         {:ok, login(conn, user)}
