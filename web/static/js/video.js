@@ -34,17 +34,48 @@ const Video = {
     });
 
     vidChannel.join()
-      .receive("ok", resp => console.log("joined the video channel", resp))
+      .receive("ok", resp => {
+        console.log(JSON.stringify(resp, null, 4));
+        this.scheduleMessages(msgContainer, resp.annotations);
+      })
       .receive("error", reason => console.log("join failed", reason));
   },
 
   renderAnnotation(msgContainer, {user, body, at}) {
     const template = document.createElement("div");
-    template.innerHTML = `<b>${user.username}</b>: ${body}`;
+    template.innerHTML = `
+      <a href="#" data-seek="${at}">
+        <b>${user.username}</b>: ${body}
+      </a>
+    `;
     msgContainer.appendChild(template);
     msgContainer.scrollTop = msgContainer.scrollHeight;
+  },
+
+  scheduleMessages(msgContainer, annotations) {
+    setTimeout(() => {
+      const ctime = Player.getCurrentTime();
+      const remaining = this.renderAtTime(annotations, ctime, msgContainer);
+      this.scheduleMessages(msgContainer, remaining);
+    }, 1000);
+  },
+
+  renderAtTime(annotations, seconds, msgContainer) {
+    return annotations.filter( ann => {
+      if (ann.at > seconds) {
+        return true;
+      } else {
+        this.renderAnnotation(msgContainer, ann);
+        return false;
+      }
+    });
+  },
+
+  formatTime(at) {
+    const date = new Date(null);
+    date.setSeconds(at / 1000);
+    return date.toISOString().substr(14, 5);
   }
 };
-
 export default Video;
 
