@@ -19,7 +19,7 @@ defmodule Rumbl.Mixfile do
   def application do
     [mod: {Rumbl, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :comeonin, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,8 @@ defmodule Rumbl.Mixfile do
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 1.2"},
       {:oauth2, "~> 0.5"},
-      {:sweet_xml, "~> 0.5.0"}
+      {:sweet_xml, "~> 0.5.0"},
+      {:httpoison, "~> 0.8.0"}
     ]
   end
 

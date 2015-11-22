@@ -1,5 +1,5 @@
 defmodule Rumbl.Permalink do
-	@behavior Ecto.Type
+	@behaviour Ecto.Type
 
   def type, do: :id
 
