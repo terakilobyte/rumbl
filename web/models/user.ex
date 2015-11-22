@@ -6,7 +6,7 @@ defmodule Rumbl.User do
     field :username, :string, required: true
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_many :videos, Rumbl.Video
+    has_many :videos, Rumbl.Video, :on_delete :fetch_and_delete
     has_many :annotations, Rumbl.Annotation
 
     timestamps
