@@ -32,17 +32,9 @@ defmodule Rumbl.VideoChannel do
 
     case Repo.insert(changeset) do
       {:ok, ann} ->
-        cond do
-          String.contains? ann.body, "wolfram:" ->
-            broadcast_annotation(socket, ann)
-            Task.start_link(fn -> compute_additional_info(ann, socket) end)
-            {:reply, :ok, socket}
-          true ->
-            annotation = Repo.preload(ann, :user)
-            broadcast! socket, "new_annotation", Phoenix.View.render(AnnotationView,
-            "annotation.json", %{annotation: annotation})
-            {:reply, :ok, socket}
-        end
+        broadcast_annotation(socket, ann)
+        Task.start_link(fn -> compute_additional_info(ann, socket) end)
+        {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
     end
