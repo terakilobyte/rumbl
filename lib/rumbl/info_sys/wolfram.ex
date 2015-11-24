@@ -7,16 +7,29 @@ defmodule Rumbl.InfoSys.Wolfram do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-
   def fetch("wolfram: " <> query_str, query_ref, owner, _limit) do
-    query_str
-    |> fetch_xml()
-    |> get_pod
-    |> send_results(query_ref, owner)
+    cond do
+      String.contains? query_str, "image" ->
+        query_str
+        |> fetch_xml()
+        |> image_pod
+        |> send_results(query_ref, owner)
+
+      true ->
+        query_str
+        |> fetch_xml()
+        |> get_pod
+        |> send_results(query_ref, owner)
+    end
   end
 
   def fetch(_, query_ref, owner, _) do
     send_results(nil, query_ref, owner)
+  end
+
+  defp image_pod(xml) do
+    xpath(xml, ~x"//queryresult/pod[contains(@title, 'Result')]
+    /subpod/imagesource/text()")
   end
 
   defp get_pod(xml) do
