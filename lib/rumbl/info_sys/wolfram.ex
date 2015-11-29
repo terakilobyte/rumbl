@@ -15,6 +15,12 @@ defmodule Rumbl.InfoSys.Wolfram do
         |> image_pod
         |> send_results(query_ref, owner)
 
+      String.contains? query_str, "picture" ->
+        query_str
+        |> fetch_xml()
+        |> image_pod
+        |> send_results(query_ref, owner)
+
       true ->
         query_str
         |> fetch_xml()
