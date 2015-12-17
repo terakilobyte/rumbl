@@ -27,7 +27,7 @@ defmodule Rumbl.VideoChannel do
   def handle_in("new_annotation", params, user, socket) do
     changeset =
     user
-    |> build(:annotations, video_id: socket.assigns.video_id)
+    |> build_assoc(:annotations, video_id: socket.assigns.video_id)
     |> Rumbl.Annotation.changeset(params)
 
     case Repo.insert(changeset) do
@@ -51,7 +51,7 @@ defmodule Rumbl.VideoChannel do
     for result <- Rumbl.InfoSys.compute(ann.body, limit: 1) do
       attrs = %{url: result.url, body: result.text, at: ann.at}
       info_changeset = result.backend
-      |> build(:annotations, video_id: ann.video_id)
+      |> build_assoc(:annotations, video_id: ann.video_id)
       |> Rumbl.Annotation.changeset(attrs)
 
       case Repo.insert(info_changeset) do

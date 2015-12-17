@@ -6,8 +6,8 @@ defmodule Rumbl.User do
     field :username, :string, required: true
     field :password, :string, virtual: true
     field :password_hash, :string
-    has_many :videos, Rumbl.Video, on_delete: :fetch_and_delete
-    has_many :annotations, Rumbl.Annotation
+    has_many :videos, Rumbl.Video, on_delete: :delete_all
+    has_many :annotations, Rumbl.Annotation, on_delete: :delete_all
 
     timestamps
   end
